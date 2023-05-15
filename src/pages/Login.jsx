@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { setIsAuthenticated, setRole, setUserID } from './../store/store';
+import { setIsAuthenticated, setRole, setUserID, setName, setSurname } from './../store/store';
 
 export default function Login() {
 
@@ -33,6 +33,8 @@ export default function Login() {
       const data = response.data;
       console.log({ data });
       dispatch(setIsAuthenticated(data.status));
+      dispatch(setName(data.firstName));
+      dispatch(setSurname(data.lastName));
       dispatch(setRole(data.role));
       dispatch(setUserID(data.id))
       if (data.status === true) {

@@ -1,14 +1,16 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+const initialAuthState = JSON.parse(localStorage.getItem('authState')) || {
   isAuthenticated: false,
   role: null,
-  userID: null
+  userID: null,
+  name: "",
+  surname: ""
 };
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState,
+  initialState: initialAuthState,
   reducers: {
     setIsAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
@@ -18,14 +20,29 @@ const authSlice = createSlice({
     },
     setUserID: (state, action ) => {
         state.userID = action.payload
-    }
+    },
+    setName: (state, action ) => {
+      state.name = action.payload
+    },
+    setSurname: (state, action ) => {
+      state.surname = action.payload
+   }
   },
 });
 
-export const { setIsAuthenticated, setRole, setUserID } = authSlice.actions;
+export const { setIsAuthenticated, setRole, setUserID, setName, setSurname } = authSlice.actions;
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
   },
 });
+
+// Spremi podatke o autentifikaciji u lokalnom skladištu prije nego se stranica osvježi ili zatvori.
+store.subscribe(() => {
+  const authState = store.getState().auth;
+  localStorage.setItem('authState', JSON.stringify(authState));
+});
+
+export default store;
+
