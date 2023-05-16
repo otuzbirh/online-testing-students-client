@@ -17,6 +17,8 @@ import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PersonIcon from '@mui/icons-material/Person';
+import QuizIcon from '@mui/icons-material/Quiz';
 import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
@@ -26,8 +28,8 @@ const Menu = ({open, handleClose}) => {
   const role = useSelector((state) => state.auth.role);
   const adminLinks = [
     { text: 'Users', icon: <PeopleIcon />, path: '/admin/users' },
-    { text: 'Quiz', icon: <SettingsIcon />, path: '/admin/quiz' },
-    { text: 'Profile', icon: <SettingsIcon />, path: '/admin/profile' },
+    { text: 'Quiz', icon: <QuizIcon />, path: '/admin/quiz' },
+    { text: 'Profile', icon: <PersonIcon />, path: '/admin/profile' },
 
   ];
 

@@ -32,7 +32,6 @@ export default function Login() {
         setError(true);
       }
       const data = response.data;
-      console.log({ data });
       dispatch(setIsAuthenticated(data.status));
       dispatch(setName(data.firstName));
       dispatch(setSurname(data.lastName));
