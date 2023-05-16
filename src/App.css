@@ -56,3 +56,83 @@ code {
     transform: rotate(360deg);
   }
 }
+
+.back--img{
+  background-image: url("/public/assets/images/login-background-image.jpg");
+  min-height: 100%;
+  min-width: 1024px;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.form--img{
+  background-image: url("/public/assets/images/login-user-logo.png");
+  background-size: contain;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.login--form{
+  background-color: #F1EEED;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: medium;
+  box-shadow: lawngreen;
+}
+
+.email--form{
+  border-style:groove;
+  border-radius: 5px !important;
+  margin-right: 0px !important;
+  margin-left: 1px ;
+  margin-bottom: 1px;
+}
+
+.passw--form{
+  border-style:groove;
+  border-radius: 5px !important;
+  margin-right: 0px !important;
+  margin-left: 1px ;
+  margin-bottom: 0.5px;
+  margin-top: 1px;
+}
+
+.btn{
+  color: white !important;
+  background-color:#4D4C4B !important;
+  justify-content: center !important;
+  align-items: center !important;
+  display:flex !important;
+  text-align: center !important;
+  font-family: Georgia, 'Times New Roman', Times, serif !important;
+  border-radius: 0 !important;
+  margin-top: 2px !important;
+}
+
+.btn:hover{
+  background-color: black !important;
+}
+
+.email--label{
+  color: rgb(203, 13, 13);
+  font-size: small;
+  height: 100%;
+  display: flex;
+  padding-left: 10px;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.passw--label{
+  color: rgb(203, 13, 13);
+  font-size: small;
+  padding-left: 10px;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}

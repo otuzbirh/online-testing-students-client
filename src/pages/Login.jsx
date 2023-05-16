@@ -5,12 +5,11 @@ import {
   TextField,
   Typography,
   Container,
-  Grid,
+ 
 } from '@mui/material';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setIsAuthenticated, setRole, setUserID, setName, setSurname } from './../store/store';
-
 export default function Login() {
 
   const dispatch = useDispatch();
@@ -22,14 +21,16 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     try {
       const response = await axios.post(
         'http://localhost:3000/api/v1/auth/login',
         { email, password },
         { headers: { 'Content-Type': 'application/json' } }
       );
-
+      if(email.length === 0 || password.length === 0){
+        setError(true);
+      }
       const data = response.data;
       console.log({ data });
       dispatch(setIsAuthenticated(data.status));
@@ -55,51 +56,62 @@ export default function Login() {
       console.error(error);
       setError('An error occurred while trying to log in');
     }
+    
   };
 
   return (
+    <div className='back--img'>
     <Container maxWidth="sm">
-      <Typography variant="h3" component="h1" align="center" gutterBottom>
+      <Typography fontFamily={'serif'}  variant="h3" component="h1" align="center" marginTop={22} gutterBottom>
         Login
       </Typography>
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12}>
+        
+        <div className='login--form'>
+        <div className='form--img'>
+        </div>
+          <div className='email--form'>
             <TextField
               id="email"
               label="Email"
               type="email"
-              variant="outlined"
+              variant="filled"
               fullWidth
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
+          </div>
+          {error && email.length<=0?
+          <label htmlFor='email' className='email--label'>*Email is required</label>: ""}
+          
+          <div className='passw--form'>
+            <TextField 
               id="password"
               label="Password"
               type="password"
-              variant="outlined"
+              variant="filled"
               fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-          </Grid>
-          <Grid item xs={12}>
-            <Button variant="contained" color="primary" type="submit" fullWidth>
-              Log in
+          </div>
+          {error && password.length<=0?
+          <label htmlFor='password' className='passw--label'>*Password is required</label>:""}
+          <div >
+            <Button className='btn' type="submit" formNoValidate fullWidth>
+              LOG IN
             </Button>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
       </form>
       {error && (
-        <Typography variant="body1" color="error" align="center">
+        <Typography fontFamily={'serif'} variant="body1" color="error" align="center">
           {error}
         </Typography>
       )}
     </Container>
+    </div>
   );
 }
