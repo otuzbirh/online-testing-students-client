@@ -67,7 +67,7 @@ const Menu = ({open, handleClose}) => {
           display: open ? 'block' : 'none',
           '& .MuiDrawer-paper': {
             width: drawerWidth,
-            backgroundColor: '#263238',
+            backgroundColor: '#1a233a',
           },
         }}
         variant="persistent"
