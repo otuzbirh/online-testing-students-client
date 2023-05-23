@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -10,7 +10,7 @@ import {
   DialogTitle,
   MenuItem,
   Snackbar,
-  Alert
+  Alert,
 } from "@mui/material";
 import usersApi from "../../http/users";
 
@@ -18,8 +18,8 @@ const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("First Name is required"),
   lastName: Yup.string().required("Last Name is required"),
   role: Yup.string().required("Role is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string().required("Password is required"),
+  // email: Yup.string().email("Invalid email").required("Email is required"),
+  // password: Yup.string().required("Password is required"),
 });
 
 const roleOptions = [
@@ -28,75 +28,118 @@ const roleOptions = [
   { value: "student", label: "Student" },
 ];
 
-export default function AddUser({ open, handleClose }) {
+export default function EditUser({ open, handleClose, id }) {
+  // Fetching user
+  const [user, setUser] = useState({});
+ 
+
+  function fetchUser() {
+    usersApi()
+      .singleUser(id)
+      .then((res) => {
+        setUser(res.data.user);
+        console.log("korisnik",user)
+
+      })
+      .catch((error) => {
+        alert("Error ocured while fetching user", error.message);
+      });
+  }
+
+  useEffect(() => {
+    if (id !== "") {
+      fetchUser();
+    } else {
+      return;
+    }
+  }, [id]);
+
+ 
+
 
   const [state, setState] = useState({
     opened: false,
-    vertical: 'top',
-    horizontal: 'right',
-    message: '',
-    severity: 'success'
+    vertical: "top",
+    horizontal: "right",
+    message: "",
+    severity: "success",
   });
   const { vertical, horizontal, opened, message, severity } = state;
 
   function handleClick(newState) {
     setState({ opened: true, ...newState });
-  };
-
-  function handleCloseAlert() {
-    setState({...state, opened: false})
   }
 
+  function handleCloseAlert() {
+    setState({ ...state, opened: false });
+  }
+
+
   const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      role: "",
-      email: "",
-      password: "",
-    },
+    enableReinitialize: true, 
+   initialValues: {
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    role: user?.role,
+    // email: user?.email,
+    // password: user?.password,
+   },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       usersApi()
-        .create(values)
+        .editUser(id, values)
         .then((res) => {
+          if(res.status === 200) {
+    
           handleClick({
-            vertical: 'top',
-            horizontal: 'right',
-            message: 'Korisnik je uspješno kreiran!',
-            severity: 'success'
-          })
-          handleClose();
-          window.location.reload();
-        
+            vertical: "top",
+            horizontal: "right",
+            message: "Uspješna promjena korisnikovih podataka!",
+            severity: "success",
+          });
+          // window.location.reload();
+         
+          setTimeout(() => {
+            handleClose();
+            window.location.reload();
+
+          }, 2000)
+        }
+        else {
+          console.log('Greska')
+        }
+     
         })
         .catch((error) => {
           handleClick({
-            vertical: 'top',
-            horizontal: 'right',
-            message: 'Greška prilikom kreiranja korisnika!',
-            severity: 'error'
+            vertical: "top",
+            horizontal: "right",
+            message: "Greška prilikom uređivanja korisnika!",
+            severity: "error",
           });
-          console.log(error)
+          console.log(error);
         });
     },
   });
 
-
-
   return (
     <Dialog open={open} onClose={handleClose}>
-        <Snackbar utoHideDuration={6000}
-          anchorOrigin={{ vertical, horizontal }}
-          open={opened}
-          onClose={handleCloseAlert}
-          key={vertical + horizontal}
+      <Snackbar
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical, horizontal }}
+        open={opened}
+        onClose={handleCloseAlert}
+        key={vertical + horizontal}
       >
-        <Alert onClose={handleCloseAlert} severity={severity} sx={{ width: '100%' }}>
+        <Alert
+          onClose={handleCloseAlert}
+          severity={severity}
+          sx={{ width: "100%" }}
+        >
           {message}
         </Alert>
       </Snackbar>
-      <DialogTitle>Kreiraj korisnika</DialogTitle>
+      <DialogTitle>Uredi korisnika</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent>
           <TextField
@@ -142,7 +185,7 @@ export default function AddUser({ open, handleClose }) {
               </MenuItem>
             ))}
           </TextField>
-          <TextField
+          {/* <TextField
             margin="dense"
             id="email"
             name="email"
@@ -165,18 +208,32 @@ export default function AddUser({ open, handleClose }) {
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
-          />
+          /> */}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{color: '#ffffff', backgroundColor: 'red', '&:hover': {
-            backgroundColor: 'red'
-          }}}>
+          <Button
+            onClick={handleClose}
+            sx={{
+              color: "#ffffff",
+              backgroundColor: "red",
+              "&:hover": {
+                backgroundColor: "red",
+              },
+            }}
+          >
             Otkaži
           </Button>
-          <Button type="submit" sx={{color: '#ffffff', backgroundColor: 'green', '&:hover': {
-            backgroundColor: 'green'
-          }}} >
-            Kreiraj
+          <Button
+            type="submit"
+            sx={{
+              color: "#ffffff",
+              backgroundColor: "green",
+              "&:hover": {
+                backgroundColor: "green",
+              },
+            }}
+          >
+            Spasi
           </Button>
         </DialogActions>
       </form>

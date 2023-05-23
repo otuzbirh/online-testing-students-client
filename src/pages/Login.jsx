@@ -21,6 +21,10 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(email.length === 0 || password.length === 0){
+      setError(true);
+    }
     
     try {
       const response = await axios.post(
@@ -28,9 +32,7 @@ export default function Login() {
         { email, password },
         { headers: { 'Content-Type': 'application/json' } }
       );
-      if(email.length === 0 || password.length === 0){
-        setError(true);
-      }
+     
       const data = response.data;
       dispatch(setIsAuthenticated(data.status));
       dispatch(setName(data.firstName));
@@ -42,7 +44,7 @@ export default function Login() {
         if (data.role === 'teacher') {
           navigate('/teacher');
         } else if (data.role === 'admin') {
-          navigate('/admin');
+          navigate('/admin/users');
         } else if (data.role === 'student') {
           navigate('/student');
         } else {

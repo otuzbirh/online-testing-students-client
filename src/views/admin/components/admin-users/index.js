@@ -1,88 +1,84 @@
-import React, {useState, useEffect} from 'react'
-import usersApi from '../../../../http/users'
-import {Button, Paper} from '@mui/material'
-import TableComponent from '../../../../components/table';
-import ActionButton from '../../../../components/buttons/actionButton';
-import AddIcon from '@mui/icons-material/Add';
-import AddModal from '../../../../components/modals/addModal';
-import AddUser from '../../../../components/forms/addUser';
+import React, { useState, useEffect } from "react";
+import { Paper } from "@mui/material";
+import usersApi from "../../../../http/users";
+import TableComponent from "../../../../components/table";
+import ActionButton from "../../../../components/buttons/actionButton";
+import AddIcon from "@mui/icons-material/Add";
+import AddUser from "../../../../components/forms/addUser";
+import EditUser from "../../../../components/forms/editUser";
 
 const AdminUsers = () => {
-
   const [users, setUsers] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [selectedUpdateId, setSelectedUpdateId] = useState("")
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   setSelectedId(selectedId)
+  // }, [selectedId])
 
-  function handleCreateButton() {
-    console.log("handle create")
-  }
 
+  //fetching users
   async function fetchData() {
     const { data } = await usersApi().listUsers();
     setUsers(data);
   }
 
+  useEffect(() => {
+    fetchData();
+  }, []);
 
+  //table config
   const columns = [
-    { id: 'firstName', label: 'Ime', minWidth: 170 },
-    { id: 'lastName', label: 'Prezime', minWidth: 170 },
-    { id: 'email', label: 'Email', minWidth: 170 },
-    { id: 'role', label: 'Status', minWidth: 170 },
-
-
-    
-    // {
-    //   id: 'population',
-    //   label: 'Population',
-    //   minWidth: 170,
-    //   align: 'right',
-    //   format: (value) => value.toLocaleString('en-US'),
-    // },  
-    // {
-    //   id: 'size',
-    //   label: 'Size\u00a0(km\u00b2)',
-    //   minWidth: 170,
-    //   align: 'right',
-    //   format: (value) => value.toLocaleString('en-US'),
-    // },
-    // {
-    //   id: 'density',
-    //   label: 'Density',
-    //   minWidth: 170,
-    //   align: 'right',
-    //   format: (value) => value.toFixed(2),
-    // },
+    { id: "id", label: "ID", minWidth: 170 },
+    { id: "firstName", label: "Ime", minWidth: 170 },
+    { id: "lastName", label: "Prezime", minWidth: 170 },
+    { id: "email", label: "Email", minWidth: 170 },
+    { id: "role", label: "Status", minWidth: 170 },
   ];
-  
-  function createData(firstName, lastName, email, role) {
-    return { firstName, lastName, email, role };
+
+  function createData(id, firstName, lastName, email, role) {
+    return {  id, firstName, lastName, email, role };
   }
 
-  function handleCreateUser() {
-    console.log("created")
-  }
-  
+  const rows = users?.data?.users?.map((user) => {
+    return createData(user?._id, user?.firstName, user?.lastName, user?.email, user?.role);
+  });
 
-  const [openCreateModal, setOpenCreateModal] = useState(false);
-  const handleOpenCreateModal = () => setOpenCreateModal(true);
-  const handleCloseCreateModal = () => setOpenCreateModal(false);
+  //create modal
+  const handleOpenCreateModal = () => setOpen(true);
 
+  const handleCloseCreateModal = () => {
+    setOpen(false);
+  };
 
-  const rows  =  users?.data?.users?.map( (user) => {
-    return createData(user?.firstName, user?.lastName, user?.email, user?.role)
-  })
+  //edit modal
+
+  const handleOpenEditModal = () => setOpenEdit(true);
+  const handleCloseEditModal = () => setOpenEdit(false)
+
 
   return (
-    <Paper elevation={2} sx={{width: '95%', height: '95%', display: 'flex', justifyContent: 'center', alignItems: 'flex-end', flexDirection: 'column'}}>
-    {/* {useri} */}
-   <ActionButton handleClick={handleOpenCreateModal} endIcon={<AddIcon />} btnText={'Kreiraj'}/>
-   <AddModal openCreateModal={openCreateModal} handleCloseCreateModal={handleCloseCreateModal} handleSubmit={handleCreateUser} modalText={'Dodaj korisnika'}  />
-
-    <TableComponent rows={rows} columns={columns} createData={createData} />
+    <Paper
+      elevation={5}
+      sx={{
+        width: "95%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-end",
+        flexDirection: "column",
+      }}
+    >
+      <ActionButton
+        handleClick={handleOpenCreateModal}
+        endIcon={<AddIcon />}
+        btnText={"Kreiraj"}
+      />
+      <TableComponent rows={rows} columns={columns} createData={createData}  setSelectedUpdateId={setSelectedUpdateId} handleOpenEditModal={handleOpenEditModal} />
+      <AddUser open={open} handleClose={handleCloseCreateModal} />
+      <EditUser open={openEdit} handleClose={handleCloseEditModal} id={selectedUpdateId} />
     </Paper>
-  )
-}
+  );
+};
 
-export default AdminUsers
+export default AdminUsers;

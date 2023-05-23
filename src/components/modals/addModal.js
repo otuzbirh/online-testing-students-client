@@ -19,6 +19,7 @@ const AddModal = ({
   handleCloseCreateModal,
   modalText,
   handleSubmit,
+  formContent
 
 }) => {
   return (
@@ -37,7 +38,7 @@ const AddModal = ({
           </Typography>
           <br></br>
           {/* <CreateLead handleCreateCloseModal={handleCloseCreateModal} counter={counter} setCounter={setCounter}/> */}
-          <AddUser />
+          {formContent}
           <Stack
             direction="row"
             spacing={2}

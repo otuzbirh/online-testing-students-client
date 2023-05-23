@@ -4,12 +4,14 @@ export default function usersApi() {
     return {
         create: async (data) =>
             api().post('user/create', data),
-        listUsers: async (id) =>
+        listUsers: async () =>
             api().get('user/list',),
-        // updateTask: async (data: ITask, id: string | undefined) => 
-        //     getApiClient().put(`tasks/${id}`, data),
-        // updateTask2: async (data: ITask2, id: string | undefined) => 
-        //     getApiClient().put(`tasks/${id}`, data)
+        singleUser: async (id) => 
+            api().get(`user/${id}`),
+        editUser: async (id, data) =>
+            api().patch(`user/${id}`, data),
+        deleteUser: async (id) => 
+            api().delete(`user/${id}`)
 
     }
 }
