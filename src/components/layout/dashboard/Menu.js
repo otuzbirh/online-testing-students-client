@@ -13,18 +13,22 @@ import {
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import QuizIcon from '@mui/icons-material/Quiz';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  setIsAuthenticated,
+} from "./../../../store/store";
 
 const drawerWidth = 240;
 
 const Menu = ({open, handleClose}) => {
 
+  const dispatch = useDispatch();
   const role = useSelector((state) => state.auth.role);
   const adminLinks = [
     { text: 'Users', icon: <PeopleIcon />, path: '/admin/users' },
@@ -34,9 +38,9 @@ const Menu = ({open, handleClose}) => {
   ];
 
   const teacherLinks = [
-    { text: 'Home', icon: <HomeIcon />, path: '/' },
-    { text: 'Users', icon: <PeopleIcon />, path: '/users' },
-    { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
+    { text: 'Quiz', icon: <QuizIcon />, path: '/teacher/quiz' },
+    { text: 'Students', icon: <PeopleIcon />, path: '/teacher/students' },
+    { text: 'Profile', icon: <PersonIcon />, path: '/teacher/profile' },
   ];
 
   const studentLinks = [
@@ -56,6 +60,12 @@ const Menu = ({open, handleClose}) => {
   };
 
   const menuItems = getLinks(role);
+
+  function handleLogout()  {
+    dispatch(setIsAuthenticated(false));
+    <Navigate to='/' />
+
+  }
 
  
 
@@ -125,6 +135,7 @@ const Menu = ({open, handleClose}) => {
         <Box sx={{ p: 2 }}>
           <ListItem
             button
+            onClick={handleLogout}
             sx={{
               color: 'white',
               '&:hover': {

@@ -28,7 +28,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required("Polje šifre je obavezno"),
 });
 
-export default function AdminProfile() {
+export default function TeacherProfile() {
   const id = useSelector((state) => state.auth.userID);
 
   const [user, setUser] = useState({});
@@ -159,7 +159,7 @@ export default function AdminProfile() {
         <AccountCircleIcon sx={{width: '90%', height: '90%'}} />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Admin Profil
+        Profil Profesora
       </Typography>
       <form sx={{ width: "100%", marginTop: 2 }} onSubmit={formik.handleSubmit}>
         <TextField

@@ -11,7 +11,9 @@ export default function usersApi() {
         editUser: async (id, data) =>
             api().patch(`user/${id}`, data),
         deleteUser: async (id) => 
-            api().delete(`user/${id}`)
+            api().delete(`user/${id}`),
+        listStudents: async () => 
+            api().get('user/')
 
     }
 }

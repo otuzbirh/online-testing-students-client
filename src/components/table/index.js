@@ -14,9 +14,11 @@ export default function TableComponent({
   columns,
   createData,
   rows,
-  // selectedId,
   setSelectedUpdateId,
   handleOpenEditModal,
+  setSelectedDeleteId,
+  setSelectedName,
+  handleOpenDeleteModal
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -99,6 +101,7 @@ export default function TableComponent({
                           onClick={(event) => {
                             handleClick(event, row.id);
                             setSelectedId(row.id)
+                            setSelectedName(row.firstName)
                           }}
                         >
                           <MoreVertIcon sx={{ color: "#253237" }} />
@@ -113,16 +116,14 @@ export default function TableComponent({
                           }}
                           onClick={() => {
                             setSelectedUpdateId(selectedId)
+                            setSelectedDeleteId(selectedId)
                           }}
                         >
                           <MenuItem onClick={handleOpenEditModal}>
                             Edit
                           </MenuItem>
                           <MenuItem
-                            onClick={() => {
-                              // handleOpenConfirmationModal();
-                              console.log("se");
-                            }}
+                            onClick={handleOpenDeleteModal}
                           >
                             Delete
                           </MenuItem>

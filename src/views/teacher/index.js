@@ -1,19 +1,24 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
 import Dashboard from '../../components/layout/dashboard';
+import Quiz from '@mui/icons-material/Quiz';
+import TeacherProfile from './components/profile';
+import {Routes, Route} from 'react-router-dom'
+import Students from './components/students/Students';
 
-const Teacher = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const role = useSelector((state) => state.auth.role);
-  const userID = useSelector((state) => state.auth.userID)
+const Admin = () => {
+
   return (
     <Dashboard>
-    <h1>Welcome! </h1>
-    <h2>Role: {role}</h2>
-    <h3>Authenticated: {isAuthenticated ? "yes" : "no"}</h3>
-    <h4>User ID: {userID}</h4>
+  
+      <Routes>
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/profile" element={<TeacherProfile />} />
+          <Route path="/students" element={<Students />} />
+
+      </Routes>
+
     </Dashboard>
   )
 }
 
-export default Teacher
+export default Admin

@@ -31,6 +31,31 @@ const roleOptions = [
 export default function EditUser({ open, handleClose, id }) {
   // Fetching user
   const [user, setUser] = useState({});
+
+  const [firstNameLabel, setFirstNameLabel] = useState("");
+  const [lastNameLabel, setLastNameLabel] = useState("");
+  const [roleLabel, setRoleLabel] = useState("");
+
+  // const [emailLabel, setEmailLabel] = useState("");
+  // const [passwordLabel, setPasswordLabel] = useState("");
+
+  const handleFieldFocus = (fieldName) => {
+    if (fieldName === "firstName") setFirstNameLabel("Ime");
+    else if (fieldName === "lastName") setLastNameLabel("Prezime");
+    else if (fieldName === "role") setLastNameLabel("Status");
+
+    // else if (fieldName === "email") setEmailLabel("Email");
+    // else if (fieldName === "password") setPasswordLabel("Šifra");
+  };
+
+  const handleFieldBlur = () => {
+    setFirstNameLabel(formik.values.firstName ? "" : "Ime");
+    setLastNameLabel(formik.values.lastName ? "" : "Prezime");
+    setRoleLabel(formik.values.role ? "" : "Status");
+
+    // setEmailLabel(formik.values.email ? "" : "Email");
+    // setPasswordLabel(formik.values.password ? "" : "Šifra");
+  };
  
 
   function fetchUser() {
@@ -77,7 +102,7 @@ export default function EditUser({ open, handleClose, id }) {
 
   const formik = useFormik({
     enableReinitialize: true, 
-   initialValues: {
+    initialValues: {
     firstName: user?.firstName,
     lastName: user?.lastName,
     role: user?.role,
@@ -147,9 +172,11 @@ export default function EditUser({ open, handleClose, id }) {
             margin="dense"
             id="firstName"
             name="firstName"
-            label="First Name"
+            label={firstNameLabel}
             type="text"
             fullWidth
+            onFocus={() => handleFieldFocus("firstName")}
+            onBlur={handleFieldBlur}
             value={formik.values.firstName}
             onChange={formik.handleChange}
             error={formik.touched.firstName && Boolean(formik.errors.firstName)}
@@ -159,11 +186,13 @@ export default function EditUser({ open, handleClose, id }) {
             margin="dense"
             id="lastName"
             name="lastName"
-            label="Last Name"
+            label={lastNameLabel}
             type="text"
             fullWidth
             value={formik.values.lastName}
             onChange={formik.handleChange}
+            onFocus={() => handleFieldFocus("lastName")}
+            onBlur={handleFieldBlur}
             error={formik.touched.lastName && Boolean(formik.errors.lastName)}
             helperText={formik.touched.lastName && formik.errors.lastName}
           />
@@ -171,10 +200,12 @@ export default function EditUser({ open, handleClose, id }) {
             margin="dense"
             id="role"
             name="role"
-            label="Role"
+            label={roleLabel}
             select
             fullWidth
             value={formik.values.role}
+            onFocus={() => handleFieldFocus("role")}
+            onBlur={handleFieldBlur}
             onChange={formik.handleChange}
             error={formik.touched.role && Boolean(formik.errors.role)}
             helperText={formik.touched.role && formik.errors.role}

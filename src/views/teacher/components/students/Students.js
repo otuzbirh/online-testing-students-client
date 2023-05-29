@@ -8,7 +8,7 @@ import AddUser from "../../../../components/forms/addUser";
 import EditUser from "../../../../components/forms/editUser";
 import DeleteModal from "../../../../components/modals/deleteModal";
 
-const AdminUsers = () => {
+const Students = () => {
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -20,7 +20,7 @@ const AdminUsers = () => {
  
   //fetching users
   async function fetchData() {
-    const { data } = await usersApi().listUsers();
+    const { data } = await usersApi().listStudents();
     setUsers(data);
   }
 
@@ -41,7 +41,7 @@ const AdminUsers = () => {
     return {  id, firstName, lastName, email, role };
   }
 
-  const rows = users?.data?.users?.map((user) => {
+  const rows = users?.data?.students?.map((user) => {
     return createData(user?._id, user?.firstName, user?.lastName, user?.email, user?.role);
   });
 
@@ -102,4 +102,4 @@ const AdminUsers = () => {
   );
 };
 
-export default AdminUsers;
+export default Students;

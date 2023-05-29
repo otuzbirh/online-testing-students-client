@@ -141,3 +141,7 @@ code {
   text-align: center;
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
+.login-background {
+  background-image: url('./../public/assets/images/login-image.jpg');
+}
