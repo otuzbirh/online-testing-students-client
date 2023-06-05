@@ -4,8 +4,8 @@ import usersApi from "../../../../http/users";
 import TableComponent from "../../../../components/table";
 import ActionButton from "../../../../components/buttons/actionButton";
 import AddIcon from "@mui/icons-material/Add";
-import AddUser from "../../../../components/forms/addUser";
-import EditUser from "../../../../components/forms/editUser";
+import AddStudent from "../../../../components/forms/addStudent";
+import EditStudent from "../../../../components/forms/editStudent";
 import DeleteModal from "../../../../components/modals/deleteModal";
 
 const Students = () => {
@@ -95,8 +95,8 @@ const Students = () => {
   
       <TableComponent rows={rows} columns={columns} createData={createData}  setSelectedUpdateId={setSelectedUpdateId} 
       handleOpenEditModal={handleOpenEditModal} handleOpenDeleteModal={handleOpenDeleteModal} setSelectedDeleteId={setSelectedDeleteId}  setSelectedName={setSelectedName}/>
-      <AddUser open={open} handleClose={handleCloseCreateModal} />
-      <EditUser open={openEdit} handleClose={handleCloseEditModal} id={selectedUpdateId} />
+      <AddStudent open={open} handleClose={handleCloseCreateModal} />
+      <EditStudent open={openEdit} handleClose={handleCloseEditModal} id={selectedUpdateId} />
       <DeleteModal open={openDelete} handleClose={handleCloseDeleteModal} handleDelete={handleDelete} userName={selectedName}  />
     </Paper>
   );

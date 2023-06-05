@@ -9,6 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import {useNavigate} from 'react-router-dom'
 
 export default function TableComponent({
   columns,
@@ -18,11 +19,14 @@ export default function TableComponent({
   handleOpenEditModal,
   setSelectedDeleteId,
   setSelectedName,
-  handleOpenDeleteModal
+  handleOpenDeleteModal,
+  module
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedId, setSelectedId] = useState("");
+
+  const navigate = useNavigate()
 
 
   const handleChangePage = (event, newPage) => {
@@ -45,6 +49,10 @@ export default function TableComponent({
     setAnchorEl(event.currentTarget);
     setSelectedId(id);
   };
+
+  const handleNavigateQuiz = (id) => {
+    navigate(`/teacher/quiz/${id}`)
+  }
 
   return (
     // <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -118,7 +126,16 @@ export default function TableComponent({
                             setSelectedUpdateId(selectedId)
                             setSelectedDeleteId(selectedId)
                           }}
-                        >
+                        >{ module === 'quiz' ? (
+                          <MenuItem
+                            onClick={() => {
+                              handleNavigateQuiz(selectedId)
+                            }}
+                          >
+                            Pitanja
+                          </MenuItem>
+                        ): (
+                          <>
                           <MenuItem onClick={handleOpenEditModal}>
                             Edit
                           </MenuItem>
@@ -127,6 +144,11 @@ export default function TableComponent({
                           >
                             Delete
                           </MenuItem>
+                          </>
+                        )
+                }
+
+                        
                         </Menu>
                       </TableCell>
                     </TableRow>
