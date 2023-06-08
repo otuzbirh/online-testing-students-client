@@ -44,9 +44,10 @@ const Menu = ({open, handleClose}) => {
   ];
 
   const studentLinks = [
-    { text: 'Home', icon: <HomeIcon />, path: '/' },
-    { text: 'Users', icon: <PeopleIcon />, path: '/users' },
-    { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
+   
+    { text: 'Profile', icon: <PersonIcon />, path: '/student/profile' },
+    { text: 'Quiz', icon: <QuizIcon />, path: '/student/quiz' },
+
   ];
 
   const getLinks = (role) => {

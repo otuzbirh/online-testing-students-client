@@ -1,17 +1,23 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
 import Dashboard from '../../components/layout/dashboard';
+import StudentProfile from './components/profile';
+import {Routes, Route} from 'react-router-dom'
+import Quiz from './components/quiz/index'
+import AccessQuiz from './components/quiz/AccessQuiz';
 
 const Student = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const role = useSelector((state) => state.auth.role);
-  const userID = useSelector((state) => state.auth.userID)
+
   return (
     <Dashboard>
-    <h1>Welcome! </h1>
-    <h2>Role: {role}</h2>
-    <h3>Authenticated: {isAuthenticated ? "yes" : "no"}</h3>
-    <h4>User ID: {userID}</h4>
+  
+      <Routes>
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/profile" element={<StudentProfile />} />
+          <Route path='/quiz/:id' element={<AccessQuiz />} />
+
+
+      </Routes>
+
     </Dashboard>
   )
 }

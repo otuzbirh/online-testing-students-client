@@ -54,6 +54,10 @@ export default function TableComponent({
     navigate(`/teacher/quiz/${id}`)
   }
 
+  const handleNavigateStudentQuiz = (id) => {
+    navigate(`/student/quiz/${id}`)
+  }
+
   return (
     // <Paper sx={{ width: '100%', overflow: 'hidden' }}>
     <>
@@ -126,27 +130,26 @@ export default function TableComponent({
                             setSelectedUpdateId(selectedId)
                             setSelectedDeleteId(selectedId)
                           }}
-                        >{ module === 'quiz' ? (
-                          <MenuItem
-                            onClick={() => {
-                              handleNavigateQuiz(selectedId)
-                            }}
-                          >
-                            Pitanja
-                          </MenuItem>
-                        ): (
-                          <>
-                          <MenuItem onClick={handleOpenEditModal}>
-                            Edit
-                          </MenuItem>
-                          <MenuItem
-                            onClick={handleOpenDeleteModal}
-                          >
-                            Delete
-                          </MenuItem>
-                          </>
-                        )
-                }
+
+                        >
+                  {module === 'student' ? (
+  <MenuItem onClick={() => handleNavigateStudentQuiz(selectedId)}>
+    Pristupi ispitu
+  </MenuItem>
+) : module === 'quiz' ? (
+  <MenuItem onClick={() => handleNavigateQuiz(selectedId)}>
+    Pitanja
+  </MenuItem>
+) : (
+  <>
+    <MenuItem onClick={handleOpenEditModal}>
+      Edit
+    </MenuItem>
+    <MenuItem onClick={handleOpenDeleteModal}>
+      Delete
+    </MenuItem>
+  </>
+)}   
 
                         
                         </Menu>
