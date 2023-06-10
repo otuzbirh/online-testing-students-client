@@ -62,11 +62,10 @@ export default function EditStudent({ open, handleClose, id }) {
       .singleUser(id)
       .then((res) => {
         setUser(res.data.user);
-        console.log("korisnik",user)
 
       })
       .catch((error) => {
-        alert("Error ocured while fetching user", error.message);
+        console.log("Error ocured while fetching user", error.message);
       });
   }
 

@@ -87,11 +87,6 @@ const Quiz = () => {
         flexDirection: "column",
       }}
     >
-      <ActionButton
-        handleClick={handleOpenCreateModal}
-        endIcon={<AddIcon />}
-        btnText={"Kreiraj"}
-      />
   
       <TableComponent rows={rows} columns={columns} createData={createData}  setSelectedUpdateId={setSelectedUpdateId} 
       handleOpenEditModal={handleOpenEditModal} handleOpenDeleteModal={handleOpenDeleteModal} setSelectedDeleteId={setSelectedDeleteId}  setSelectedName={setSelectedName} module="student"/>

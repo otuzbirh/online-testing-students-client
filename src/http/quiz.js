@@ -10,7 +10,7 @@ export default function quizApi() {
             api().get(`quiz/${id}`),
         editQuiz: async (id, data) =>
             api().patch(`quiz/${id}`, data),
-        deleteUser: async (id) => 
+        deleteQuiz: async (id) => 
             api().delete(`quiz/${id}`),
         
 

@@ -14,7 +14,7 @@ const Score = () => {
  
   //fetching quizes
   async function fetchData() {
-    const { data } = await scoreApi().studentScores(studentId);
+    const { data } = await scoreApi().listScores();
     setScores(data);
   }
 
@@ -26,16 +26,19 @@ const Score = () => {
   const columns = [
     { id: "id", label: "ID", minWidth: 170 },
     { id: "quizname", label: "Naziv", minWidth: 170 },
+    { id: "studentname", label: "Ime", minWidth: 170 },
+    { id: "studentsurname", label: "Prezime", minWidth: 170 },
+    { id: "email", label: "Emaiil", minWidth: 170 },
     { id: "score", label: "Rezultat", minWidth: 170 },
     
   ];
 
-  function createData(id,  quizname,  score) {
-    return {  id, quizname, score };
+  function createData(id, quizname, studentname, studentsurname, email,  score) {
+    return {  id, quizname, studentname, studentsurname, email, score };
   }
 
   const rows = scores?.map((score) => {
-    return createData(score?._id, score?.quizId?.quizname,  score?.score);
+    return createData(score?._id, score?.quizId?.quizname, score?.studentId?.firstName, score?.studentId?.lastName, score?.studentId?.email,  score?.score);
   });
 
 

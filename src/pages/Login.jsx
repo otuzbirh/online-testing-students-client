@@ -127,11 +127,11 @@ export default function Login() {
       if (data.status === true) {
         localStorage.setItem("token", data.token);
         if (data.role === "teacher") {
-          navigate("/teacher");
+          navigate("/teacher/students");
         } else if (data.role === "admin") {
           navigate("/admin/users");
         } else if (data.role === "student") {
-          navigate("/student");
+          navigate("/student/quiz");
         } else {
           navigate("/");
         }

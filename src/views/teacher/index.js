@@ -5,6 +5,7 @@ import {Routes, Route} from 'react-router-dom'
 import Students from './components/students/Students';
 import Quiz from './components/quiz/index'
 import QuizManagment from './components/quiz/QuizManagment';
+import Score from './components/score';
 
 const Admin = () => {
 
@@ -15,6 +16,8 @@ const Admin = () => {
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/profile" element={<TeacherProfile />} />
           <Route path="/students" element={<Students />} />
+          <Route path="/scores" element={<Score />} />
+
           <Route path='/quiz/:id' element={<QuizManagment />} />
 
       </Routes>

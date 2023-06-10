@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Paper } from "@mui/material";
-import usersApi from "../../../../http/users";
 import quizApi from "../../../../http/quiz";
 import TableComponent from "../../../../components/table";
 import ActionButton from "../../../../components/buttons/actionButton";
 import AddIcon from "@mui/icons-material/Add";
-import AddStudent from "../../../../components/forms/addStudent";
-import EditStudent from "../../../../components/forms/editStudent";
+import EditQuiz from "../../../../components/forms/editQuiz";
 import DeleteModal from "../../../../components/modals/deleteModal";
+import AddQuiz from "../../../../components/forms/addQuiz";
 
 const Quiz = () => {
   const [quizes, setQuizes] = useState([]);
@@ -63,7 +62,7 @@ const Quiz = () => {
   const handleCloseDeleteModal = () => setOpenDelete(false);
 
   function handleDelete () {
-   usersApi().deleteUser(selectedDeleteId)
+   quizApi().deleteQuiz(selectedDeleteId)
    .then((res) => {
     setTimeout(() => {
       setOpenDelete(false)
@@ -72,7 +71,7 @@ const Quiz = () => {
       
    })
    .catch((error) => {
-    alert('Došlo je do greškre prilikom brisanja korisnika!', error.message)
+    alert('Došlo je do greškre prilikom brisanja kviza!', error.message)
    })
   }
 
@@ -95,8 +94,8 @@ const Quiz = () => {
   
       <TableComponent rows={rows} columns={columns} createData={createData}  setSelectedUpdateId={setSelectedUpdateId} 
       handleOpenEditModal={handleOpenEditModal} handleOpenDeleteModal={handleOpenDeleteModal} setSelectedDeleteId={setSelectedDeleteId}  setSelectedName={setSelectedName} module="quiz"/>
-      <AddStudent open={open} handleClose={handleCloseCreateModal} />
-      <EditStudent open={openEdit} handleClose={handleCloseEditModal} id={selectedUpdateId} />
+      <AddQuiz open={open} handleClose={handleCloseCreateModal} />
+      <EditQuiz open={openEdit} handleClose={handleCloseEditModal} id={selectedUpdateId} />
       <DeleteModal open={openDelete} handleClose={handleCloseDeleteModal} handleDelete={handleDelete} userName={selectedName}  />
     </Paper>
   );

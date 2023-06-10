@@ -51,8 +51,19 @@ export default function TableComponent({
   };
 
   const handleNavigateQuiz = (id) => {
-    navigate(`/teacher/quiz/${id}`)
-  }
+    const currentUrl = window.location.pathname;
+    let destinationUrl = '';
+  
+    if (currentUrl.includes('teacher/quiz')) {
+      destinationUrl = `/teacher/quiz/${id}`;
+    } else if (currentUrl.includes('admin/quiz')) {
+      destinationUrl = `/admin/quiz/${id}`;
+    }
+  
+    if (destinationUrl) {
+      navigate(destinationUrl);
+    }
+  };
 
   const handleNavigateStudentQuiz = (id) => {
     navigate(`/student/quiz/${id}`)
@@ -113,7 +124,7 @@ export default function TableComponent({
                           onClick={(event) => {
                             handleClick(event, row.id);
                             setSelectedId(row.id)
-                            setSelectedName(row.firstName)
+                            setSelectedName(row.firstName || row.quizname)
                           }}
                         >
                           <MoreVertIcon sx={{ color: "#253237" }} />
@@ -132,14 +143,22 @@ export default function TableComponent({
                           }}
 
                         >
-                  {module === 'student' ? (
+                  {module === 'student'  ? (
   <MenuItem onClick={() => handleNavigateStudentQuiz(selectedId)}>
     Pristupi ispitu
   </MenuItem>
 ) : module === 'quiz' ? (
+  <>
   <MenuItem onClick={() => handleNavigateQuiz(selectedId)}>
     Pitanja
   </MenuItem>
+   <MenuItem onClick={handleOpenEditModal}>
+   Uredi
+ </MenuItem>
+ <MenuItem onClick={handleOpenDeleteModal}>
+   Obriši
+   </MenuItem>
+   </>
 ) : (
   <>
     <MenuItem onClick={handleOpenEditModal}>

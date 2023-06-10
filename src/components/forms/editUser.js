@@ -36,16 +36,13 @@ export default function EditUser({ open, handleClose, id }) {
   const [lastNameLabel, setLastNameLabel] = useState("");
   const [roleLabel, setRoleLabel] = useState("");
 
-  // const [emailLabel, setEmailLabel] = useState("");
-  // const [passwordLabel, setPasswordLabel] = useState("");
+
 
   const handleFieldFocus = (fieldName) => {
     if (fieldName === "firstName") setFirstNameLabel("Ime");
     else if (fieldName === "lastName") setLastNameLabel("Prezime");
     else if (fieldName === "role") setLastNameLabel("Status");
 
-    // else if (fieldName === "email") setEmailLabel("Email");
-    // else if (fieldName === "password") setPasswordLabel("Šifra");
   };
 
   const handleFieldBlur = () => {
@@ -63,11 +60,10 @@ export default function EditUser({ open, handleClose, id }) {
       .singleUser(id)
       .then((res) => {
         setUser(res.data.user);
-        console.log("korisnik",user)
 
       })
       .catch((error) => {
-        alert("Error ocured while fetching user", error.message);
+        console.log("Error ocured while fetching user", error.message);
       });
   }
 

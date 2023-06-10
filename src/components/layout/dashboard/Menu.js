@@ -32,23 +32,26 @@ const Menu = ({open, handleClose}) => {
   const dispatch = useDispatch();
   const role = useSelector((state) => state.auth.role);
   const adminLinks = [
-    { text: 'Users', icon: <PeopleIcon />, path: '/admin/users' },
-    { text: 'Quiz', icon: <QuizIcon />, path: '/admin/quiz' },
-    { text: 'Profile', icon: <PersonIcon />, path: '/admin/profile' },
+    { text: 'Korisnici', icon: <PeopleIcon />, path: '/admin/users' },
+    { text: 'Ispiti', icon: <QuizIcon />, path: '/admin/quiz' },
+    { text: 'Rezultati', icon: <CreditScoreIcon />, path: '/admin/scores' },
+    { text: 'Profil', icon: <PersonIcon />, path: '/admin/profile' },
 
   ];
 
   const teacherLinks = [
-    { text: 'Quiz', icon: <QuizIcon />, path: '/teacher/quiz' },
-    { text: 'Students', icon: <PeopleIcon />, path: '/teacher/students' },
-    { text: 'Profile', icon: <PersonIcon />, path: '/teacher/profile' },
+    { text: 'Ispiti', icon: <QuizIcon />, path: '/teacher/quiz' },
+    { text: 'Studenti', icon: <PeopleIcon />, path: '/teacher/students' },
+    { text: 'Rezultati', icon: <CreditScoreIcon />, path: '/teacher/scores' },
+    { text: 'Profil', icon: <PersonIcon />, path: '/teacher/profile' },
   ];
 
   const studentLinks = [
    
-    { text: 'Profile', icon: <PersonIcon />, path: '/student/profile' },
-    { text: 'Quiz', icon: <QuizIcon />, path: '/student/quiz' },
-    { text: 'Scores', icon: <CreditScoreIcon />, path: '/student/scores' },
+    { text: 'Ispiti', icon: <QuizIcon />, path: '/student/quiz' },
+    { text: 'Rezultati', icon: <CreditScoreIcon />, path: '/student/scores' },
+    { text: 'Profil', icon: <PersonIcon />, path: '/student/profile' },
+
 
 
   ];
@@ -150,7 +153,7 @@ const Menu = ({open, handleClose}) => {
             <ListItemIcon sx={{ color: 'white' }}>
               <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary="Logout" />
+            <ListItemText primary="Odjava" />
           </ListItem>
         </Box>
       </Drawer>

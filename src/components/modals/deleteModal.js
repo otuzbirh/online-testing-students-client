@@ -27,7 +27,7 @@ export default function DeleteModal({open, handleClose, handleDelete, userName})
         <DialogTitle>{"Brisanje korisnika?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-           Da li ste sigurni da želite obrisati korisnika {userName}?
+           Da li ste sigurni da želite obrisati  {userName}?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
