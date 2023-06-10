@@ -19,6 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import QuizIcon from '@mui/icons-material/Quiz';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setIsAuthenticated,
@@ -47,6 +48,8 @@ const Menu = ({open, handleClose}) => {
    
     { text: 'Profile', icon: <PersonIcon />, path: '/student/profile' },
     { text: 'Quiz', icon: <QuizIcon />, path: '/student/quiz' },
+    { text: 'Scores', icon: <CreditScoreIcon />, path: '/student/scores' },
+
 
   ];
 
