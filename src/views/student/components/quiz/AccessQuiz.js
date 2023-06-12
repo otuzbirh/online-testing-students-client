@@ -70,7 +70,11 @@ function AccessQuiz() {
     })
     .then(res => console.log("Uspješno"))
     .catch((err) => console.log(err))
-    router('/student/scores')
+
+    setTimeout(() => {
+      router('/student/scores')
+    }, 3000)
+   
   };
 
   const currentQuestion = quiz[currentQuestionIndex];
