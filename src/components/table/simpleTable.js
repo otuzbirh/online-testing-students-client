@@ -13,12 +13,16 @@ export default function SimpleTable({
   columns,
   createData,
   rows,
+  handleOpenDeleteModal,
+  setSelectedDeleteId
+
 
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [selectedId, setSelectedId] = useState("");
 
-  
+
 
 
   const handleChangePage = (event, newPage) => {
@@ -30,7 +34,19 @@ export default function SimpleTable({
     setPage(0);
   };
 
- 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleClick = (event, id) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedId(id);
+  };
+
+
 
   return (
     // <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -78,7 +94,43 @@ export default function SimpleTable({
                           </TableCell>
                         );
                       })}
-              
+                      <TableCell align="right">
+                        <Button
+                          id="basic-button"
+                          aria-controls={open ? "basic-menu" : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? "true" : undefined}
+                          onClick={(event) => {
+                            handleClick(event, row.id);
+                            setSelectedId(row.id)
+                          }}
+                        >
+                          <MoreVertIcon sx={{ color: "#253237" }} />
+                        </Button>
+                        <Menu
+                          id="basic-menu"
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={handleClose}
+                          MenuListProps={{
+                            "aria-labelledby": "basic-button",
+                          }}
+                          onClick={() => {
+                            setSelectedDeleteId(selectedId)
+                          }}
+
+                        >
+
+
+                          <MenuItem onClick={handleOpenDeleteModal}>
+                            Obriši
+                          </MenuItem>
+
+
+
+                        </Menu>
+                      </TableCell>
+
                     </TableRow>
                   );
                 })

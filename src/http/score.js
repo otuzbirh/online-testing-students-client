@@ -8,6 +8,8 @@ export default function scoreApi() {
             api().get('score/list',),
         studentScores: async (id) => 
             api().get(`score/list/${id}`),
+        deleteScore: async (id) => 
+            api().get(`score/delete/${id}`)
    
         
 

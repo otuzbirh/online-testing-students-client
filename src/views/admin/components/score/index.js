@@ -3,11 +3,14 @@ import { Paper } from "@mui/material";
 import scoreApi from "../../../../http/score";
 import { useSelector } from "react-redux";
 import SimpleTable from "../../../../components/table/simpleTable";
-
+import DeleteScoreModal from "../../../../components/modals/deleteScore"
 
 
 const Score = () => {
   const [scores, setScores] = useState([]);
+  const [openDelete, setOpenDelete] = useState(false)
+  const [selectedDeleteId, setSelectedDeleteId] = useState("")
+
 
   const studentId = useSelector((state) => state.auth.userID);
 
@@ -41,6 +44,25 @@ const Score = () => {
     return createData(score?._id, score?.quizId?.quizname, score?.studentId?.firstName, score?.studentId?.lastName, score?.studentId?.email,  score?.score);
   });
 
+  //delete modal
+
+  const handleOpenDeleteModal = () => setOpenDelete(true);
+  const handleCloseDeleteModal = () => setOpenDelete(false);
+
+  function handleDelete () {
+   scoreApi().deleteScore(selectedDeleteId)
+   .then((res) => {
+    setTimeout(() => {
+      setOpenDelete(false)
+      window.location.reload()
+    }, 1000)
+      
+   })
+   .catch((error) => {
+    alert('Došlo je do greškre prilikom brisanja rezultata!', error.message)
+   })
+  }
+
 
 
   return (
@@ -56,7 +78,9 @@ const Score = () => {
     >
      
   
-      <SimpleTable  columns={columns} createData={createData} rows={rows} />
+      <SimpleTable handleOpenDeleteModal={handleOpenDeleteModal} setSelectedDeleteId={setSelectedDeleteId} columns={columns} createData={createData} rows={rows} />
+      <DeleteScoreModal open={openDelete} handleClose={handleCloseDeleteModal} handleDelete={handleDelete} />
+
     </Paper>
   );
 };
