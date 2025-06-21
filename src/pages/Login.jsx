@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { CircularProgress } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import {
@@ -23,7 +23,7 @@ import {
 import { isEmail } from "./../utilities/fields/validations";
 import AuthTextInput from "../components/auth-input/authTextInput";
 import AuthPasswordInput from "../components/auth-input/authPasswordInput";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function Copyright(props) {
   return (
@@ -114,6 +114,8 @@ export default function Login() {
     try {
       const response = await axios.post(
         "https://app-testing-students.onrender.com/api/v1/auth/login",
+        // "http://localhost:3000/api/v1/auth/login",
+
         loginData,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -139,7 +141,11 @@ export default function Login() {
         setError("Unijeli ste pogrešne podatke! Pokušajte ponovo");
       }
     } catch (error) {
-      setError("Došlo je do greške prilikom prijave. Pokušajte ponovo!");
+      if (error?.response?.status === 401) {
+        setError("Pogrešni podaci za prijavu!");
+      } else {
+        setError("Došlo je do greške prilikom prijave. Pokušajte ponovo!");
+      }
     } finally {
       setLoading(false);
     }
@@ -154,7 +160,7 @@ export default function Login() {
           xs={false}
           sm={4}
           md={7}
-          className='login-background'
+          className="login-background"
           sx={{
             // backgroundImage:
             //   // "url(https://source.unsplash.com/random?wallpapers)",
@@ -176,19 +182,26 @@ export default function Login() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              justifyContent: 'center',
-              height: '100%'
+              justifyContent: "center",
+              height: "100%",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "primary.main", height: '60px', width: '60px' }}>
-              <AccountCircleIcon sx={{height: '90%', width: '90%'}} />
+            <Avatar
+              sx={{
+                m: 1,
+                bgcolor: "primary.main",
+                height: "60px",
+                width: "60px",
+              }}
+            >
+              <AccountCircleIcon sx={{ height: "90%", width: "90%" }} />
             </Avatar>
             <Typography
               component="h1"
               variant="h5"
               sx={{ textAlign: "center" }}
             >
-              Dobro došli na paltformu za online testiranje studenata
+              Dobrodošli na Platformu za online testiranje studenata
             </Typography>
             <Box
               component="form"
@@ -213,7 +226,7 @@ export default function Login() {
                 fullWidth
                 variant="contained"
                 onClick={handleSubmit}
-                disabled={buttonsDisabled}
+                disabled={buttonsDisabled || loading}
                 sx={{
                   mt: 1,
                   mb: 2,
@@ -226,15 +239,20 @@ export default function Login() {
                   },
                 }}
               >
-                Prijava
+                {loading ? (
+                  <CircularProgress size={24} sx={{ color: "white" }} />
+                ) : (
+                  "Prijava"
+                )}
               </Button>
-              <Box sx={{display: 'flex', justifyContent: 'center' }}>
-                {error && ( 
+
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                {error && (
                   <Typography
                     variant="body2"
                     color="error"
                     align="center"
-                    sx={{ mt: 1, textAlign: 'center' }}
+                    sx={{ mt: 1, textAlign: "center" }}
                   >
                     {error}
                   </Typography>

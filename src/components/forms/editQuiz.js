@@ -16,10 +16,9 @@ import quizApi from "../../http/quiz";
 import { ContactSupportOutlined } from "@mui/icons-material";
 
 const validationSchema = Yup.object().shape({
-    quizname: Yup.string().required("Naziv ispita je obavezan"),
-    quizdescription: Yup.string().required("Opis ispita je obavezan"),
+  quizname: Yup.string().required("Naziv ispita je obavezan"),
+  quizdescription: Yup.string().required("Sadržaj ispita je obavezan"),
 });
-
 
 
 export default function EditQuiz({ open, handleClose, id }) {
@@ -34,7 +33,7 @@ export default function EditQuiz({ open, handleClose, id }) {
     if (fieldName === "quizname") setQuiznameLabel("Kviz");
     else if (fieldName === "quizdescription") setQuizdescriptionLabel("Opis");
 
-   
+
   };
 
   const handleFieldBlur = () => {
@@ -42,11 +41,11 @@ export default function EditQuiz({ open, handleClose, id }) {
     setQuizdescriptionLabel(formik.values.quizdescription ? "" : "Opis");
 
   };
- 
+
 
   function fetchQuiz() {
     quizApi()
-    .singleQuiz(id)
+      .singleQuiz(id)
       .then((res) => {
         setQuiz(res.data);
 
@@ -64,7 +63,7 @@ export default function EditQuiz({ open, handleClose, id }) {
     }
   }, [id]);
 
- 
+
 
 
   const [state, setState] = useState({
@@ -87,37 +86,37 @@ export default function EditQuiz({ open, handleClose, id }) {
 
 
   const formik = useFormik({
-    enableReinitialize: true, 
+    enableReinitialize: true,
     initialValues: {
-    quizname: quiz?.quizname,
-    quizdescription: quiz?.quizdescription,
+      quizname: quiz?.quizname,
+      quizdescription: quiz?.quizdescription,
 
-   },
+    },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       quizApi()
-      .editQuiz(id, values)  
+        .editQuiz(id, values)
         .then((res) => {
-          if(res.status === 200) {
-    
-          handleClick({
-            vertical: "top",
-            horizontal: "right",
-            message: "Uspješna promjena kviza!",
-            severity: "success",
-          });
-          // window.location.reload();
-         
-          setTimeout(() => {
-            handleClose();
-            window.location.reload();
+          if (res.status === 200) {
 
-          }, 2000)
-        }
-        else {
-          console.log('Greska')
-        }
-     
+            handleClick({
+              vertical: "top",
+              horizontal: "right",
+              message: "Uspješna promjena kviza!",
+              severity: "success",
+            });
+            // window.location.reload();
+
+            setTimeout(() => {
+              handleClose();
+              window.location.reload();
+
+            }, 2000)
+          }
+          else {
+            console.log('Greska')
+          }
+
         })
         .catch((error) => {
           handleClick({
@@ -180,7 +179,7 @@ export default function EditQuiz({ open, handleClose, id }) {
             error={formik.touched.quizdescription && Boolean(formik.errors.quizdescription)}
             helperText={formik.touched.quizdescription && formik.errors.quizdescription}
           />
-       
+
         </DialogContent>
         <DialogActions>
           <Button

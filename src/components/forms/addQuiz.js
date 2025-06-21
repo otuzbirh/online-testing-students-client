@@ -8,7 +8,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  MenuItem,
   Snackbar,
   Alert
 } from "@mui/material";
@@ -17,13 +16,12 @@ import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object().shape({
   quizname: Yup.string().required("Naziv ispita je obavezan"),
-  quizdescription: Yup.string().required("Opis ispita je obavezan"),
+  quizdescription: Yup.string().required("Sadržaj ispita je obavezan"),
 });
-
 
 export default function AddQuiz({ open, handleClose }) {
 
-    const ownerId = useSelector((state) => state.auth.userID);
+  const ownerId = useSelector((state) => state.auth.userID);
 
 
   const [state, setState] = useState({
@@ -40,7 +38,7 @@ export default function AddQuiz({ open, handleClose }) {
   };
 
   function handleCloseAlert() {
-    setState({...state, opened: false})
+    setState({ ...state, opened: false })
   }
 
   const formik = useFormik({
@@ -48,7 +46,7 @@ export default function AddQuiz({ open, handleClose }) {
       quizname: "",
       quizdescription: "",
       owner: ownerId,
- 
+
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -63,7 +61,7 @@ export default function AddQuiz({ open, handleClose }) {
           })
           handleClose();
           window.location.reload();
-        
+
         })
         .catch((error) => {
           handleClick({
@@ -81,17 +79,17 @@ export default function AddQuiz({ open, handleClose }) {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-        <Snackbar utoHideDuration={6000}
-          anchorOrigin={{ vertical, horizontal }}
-          open={opened}
-          onClose={handleCloseAlert}
-          key={vertical + horizontal}
+      <Snackbar utoHideDuration={6000}
+        anchorOrigin={{ vertical, horizontal }}
+        open={opened}
+        onClose={handleCloseAlert}
+        key={vertical + horizontal}
       >
         <Alert onClose={handleCloseAlert} severity={severity} sx={{ width: '100%' }}>
           {message}
         </Alert>
       </Snackbar>
-      <DialogTitle>Kreiraj korisnika</DialogTitle>
+      <DialogTitle>Kreiraj ispit</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent>
           <TextField
@@ -119,17 +117,21 @@ export default function AddQuiz({ open, handleClose }) {
             error={formik.touched.quizdescription && Boolean(formik.errors.quizdescription)}
             helperText={formik.touched.quizdescription && formik.errors.quizdescription}
           />
-      
+
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{color: '#ffffff', backgroundColor: 'red', '&:hover': {
-            backgroundColor: 'red'
-          }}}>
+          <Button onClick={handleClose} sx={{
+            color: '#ffffff', backgroundColor: 'red', '&:hover': {
+              backgroundColor: 'red'
+            }
+          }}>
             Otkaži
           </Button>
-          <Button type="submit" sx={{color: '#ffffff', backgroundColor: 'green', '&:hover': {
-            backgroundColor: 'green'
-          }}} >
+          <Button type="submit" sx={{
+            color: '#ffffff', backgroundColor: 'green', '&:hover': {
+              backgroundColor: 'green'
+            }
+          }} >
             Kreiraj
           </Button>
         </DialogActions>

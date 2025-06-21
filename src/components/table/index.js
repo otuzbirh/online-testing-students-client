@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function TableComponent({
   columns,
@@ -53,13 +53,13 @@ export default function TableComponent({
   const handleNavigateQuiz = (id) => {
     const currentUrl = window.location.pathname;
     let destinationUrl = '';
-  
+
     if (currentUrl.includes('teacher/quiz')) {
       destinationUrl = `/teacher/quiz/${id}`;
     } else if (currentUrl.includes('admin/quiz')) {
       destinationUrl = `/admin/quiz/${id}`;
     }
-  
+
     if (destinationUrl) {
       navigate(destinationUrl);
     }
@@ -138,39 +138,41 @@ export default function TableComponent({
                             "aria-labelledby": "basic-button",
                           }}
                           onClick={() => {
-                            setSelectedUpdateId(selectedId)
-                            setSelectedDeleteId(selectedId)
+                            if (selectedId) {
+                              setSelectedUpdateId(selectedId)
+                              setSelectedDeleteId(selectedId)
+                            }
                           }}
 
                         >
-                  {module === 'student'  ? (
-  <MenuItem onClick={() => handleNavigateStudentQuiz(selectedId)}>
-    Pristupi ispitu
-  </MenuItem>
-) : module === 'quiz' ? (
-  <>
-  <MenuItem onClick={() => handleNavigateQuiz(selectedId)}>
-    Pitanja
-  </MenuItem>
-   <MenuItem onClick={handleOpenEditModal}>
-   Uredi
- </MenuItem>
- <MenuItem onClick={handleOpenDeleteModal}>
-   Obriši
-   </MenuItem>
-   </>
-) : (
-  <>
-    <MenuItem onClick={handleOpenEditModal}>
-      Edit
-    </MenuItem>
-    <MenuItem onClick={handleOpenDeleteModal}>
-      Delete
-    </MenuItem>
-  </>
-)}   
+                          {module === 'student' ? (
+                            <MenuItem onClick={() => handleNavigateStudentQuiz(selectedId)}>
+                              Pristupi ispitu
+                            </MenuItem>
+                          ) : module === 'quiz' ? (
+                            <>
+                              <MenuItem onClick={() => handleNavigateQuiz(selectedId)}>
+                                Pitanja
+                              </MenuItem>
+                              <MenuItem onClick={handleOpenEditModal}>
+                                Uredi
+                              </MenuItem>
+                              <MenuItem onClick={handleOpenDeleteModal}>
+                                Obriši
+                              </MenuItem>
+                            </>
+                          ) : (
+                            <>
+                              <MenuItem onClick={handleOpenEditModal}>
+                                Uredi
+                              </MenuItem>
+                              <MenuItem onClick={handleOpenDeleteModal}>
+                                Obriši
+                              </MenuItem>
+                            </>
+                          )}
 
-                        
+
                         </Menu>
                       </TableCell>
                     </TableRow>
