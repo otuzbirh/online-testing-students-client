@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const createApiClient = () => {
     const client = axios.create({
-        baseURL: "https://app-testing-students.onrender.com/api/v1",
+        baseURL: "https://online-exams-server.onrender.com/api/v1",
         // baseURL: "http://localhost:3000/api/v1",
 
         headers: {

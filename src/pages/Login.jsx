@@ -113,7 +113,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "https://app-testing-students.onrender.com/api/v1/auth/login",
+        "https://online-exams-server.onrender.com/api/v1/auth/login",
         // "http://localhost:3000/api/v1/auth/login",
 
         loginData,
