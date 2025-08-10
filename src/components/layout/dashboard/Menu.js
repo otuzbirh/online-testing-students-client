@@ -97,7 +97,7 @@ const LogoIcon = styled(Avatar)(({ theme }) => ({
 }));
 
 const StyledListItem = styled(ListItem)(({ theme, active }) => ({
-  margin: theme.spacing(0.5, 1.5),
+  // margin: theme.spacing(0.5, 1.5),
   borderRadius: theme.spacing(2),
   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   position: 'relative',
@@ -142,7 +142,7 @@ const StyledListItem = styled(ListItem)(({ theme, active }) => ({
 
 const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
   color: 'rgba(255, 255, 255, 0.9)',
-  minWidth: '48px',
+  minWidth: '18px',
   justifyContent: 'center',
   '& .MuiSvgIcon-root': {
     fontSize: '1.4rem',

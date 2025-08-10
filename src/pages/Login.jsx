@@ -116,6 +116,8 @@ export default function Login() {
         ? process.env.REACT_APP_API_URL_LOCAL
         : process.env.REACT_APP_API_URL_PRODUCTION;
 
+    console.log({ apiUrl });
+
     try {
       const response = await axios.post(
         `${apiUrl}/auth/login`,
