@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 const createApiClient = () => {
+    console.log("Creating API client...", process.env.NODE_ENV, process.env.REACT_APP_API_URL_LOCAL, process.env.REACT_APP_API_URL_PRODUCTION);
     const client = axios.create({
-        baseURL: "https://online-exams-server.onrender.com/api/v1",
-        // baseURL: "http://localhost:3000/api/v1",
+        baseURL: process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_URL_LOCAL : process.env.REACT_APP_API_URL_PRODUCTION,
 
         headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`

@@ -111,10 +111,14 @@ export default function Login() {
 
     setLoading(true);
 
+    const apiUrl =
+      process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_API_URL_LOCAL
+        : process.env.REACT_APP_API_URL_PRODUCTION;
+
     try {
       const response = await axios.post(
-        "https://online-exams-server.onrender.com/api/v1/auth/login",
-        // "http://localhost:3000/api/v1/auth/login",
+        `${apiUrl}/auth/login`,
 
         loginData,
         { headers: { "Content-Type": "application/json" } }

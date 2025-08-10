@@ -18,7 +18,7 @@ const Quiz = () => {
   const [selectedDeleteId, setSelectedDeleteId] = useState("")
   const [selectedName, setSelectedName] = useState("")
 
- 
+
   //fetching quizes
   async function fetchData() {
     const { data } = await quizApi().listQuizes();
@@ -38,7 +38,7 @@ const Quiz = () => {
   ];
 
   function createData(id, quizname, quizdescription, owner) {
-    return {  id, quizname, quizdescription, owner };
+    return { id, quizname, quizdescription, owner };
   }
 
   const rows = quizes?.map((user) => {
@@ -62,18 +62,18 @@ const Quiz = () => {
   const handleOpenDeleteModal = () => setOpenDelete(true);
   const handleCloseDeleteModal = () => setOpenDelete(false);
 
-  function handleDelete () {
-   usersApi().deleteUser(selectedDeleteId)
-   .then((res) => {
-    setTimeout(() => {
-      setOpenDelete(false)
-      window.location.reload()
-    }, 1000)
-      
-   })
-   .catch((error) => {
-    alert('Došlo je do greškre prilikom brisanja korisnika!', error.message)
-   })
+  function handleDelete() {
+    usersApi().deleteUser(selectedDeleteId)
+      .then((res) => {
+        setTimeout(() => {
+          setOpenDelete(false)
+          window.location.reload()
+        }, 1000)
+
+      })
+      .catch((error) => {
+        alert('Došlo je do greškre prilikom brisanja korisnika!', error.message)
+      })
   }
 
   return (
@@ -87,12 +87,12 @@ const Quiz = () => {
         flexDirection: "column",
       }}
     >
-  
-      <TableComponent rows={rows} columns={columns} createData={createData}  setSelectedUpdateId={setSelectedUpdateId} 
-      handleOpenEditModal={handleOpenEditModal} handleOpenDeleteModal={handleOpenDeleteModal} setSelectedDeleteId={setSelectedDeleteId}  setSelectedName={setSelectedName} module="student"/>
+
+      <TableComponent placeholder="Pretraži kvizove po imenu, opisu ili kreatoru..." rows={rows} columns={columns} createData={createData} setSelectedUpdateId={setSelectedUpdateId}
+        handleOpenEditModal={handleOpenEditModal} handleOpenDeleteModal={handleOpenDeleteModal} setSelectedDeleteId={setSelectedDeleteId} setSelectedName={setSelectedName} module="student" />
       <AddStudent open={open} handleClose={handleCloseCreateModal} />
       <EditStudent open={openEdit} handleClose={handleCloseEditModal} id={selectedUpdateId} />
-      <DeleteModal open={openDelete} handleClose={handleCloseDeleteModal} handleDelete={handleDelete} userName={selectedName}  />
+      <DeleteModal open={openDelete} handleClose={handleCloseDeleteModal} handleDelete={handleDelete} userName={selectedName} />
     </Paper>
   );
 };

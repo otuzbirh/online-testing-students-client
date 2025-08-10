@@ -17,7 +17,7 @@ const Quiz = () => {
   const [selectedDeleteId, setSelectedDeleteId] = useState("")
   const [selectedName, setSelectedName] = useState("")
 
- 
+
   //fetching quizes
   async function fetchData() {
     const { data } = await quizApi().listQuizes();
@@ -37,7 +37,7 @@ const Quiz = () => {
   ];
 
   function createData(id, quizname, quizdescription, owner) {
-    return {  id, quizname, quizdescription, owner };
+    return { id, quizname, quizdescription, owner };
   }
 
   const rows = quizes?.map((user) => {
@@ -61,18 +61,18 @@ const Quiz = () => {
   const handleOpenDeleteModal = () => setOpenDelete(true);
   const handleCloseDeleteModal = () => setOpenDelete(false);
 
-  function handleDelete () {
-   quizApi().deleteQuiz(selectedDeleteId)
-   .then((res) => {
-    setTimeout(() => {
-      setOpenDelete(false)
-      window.location.reload()
-    }, 1000)
-      
-   })
-   .catch((error) => {
-    alert('Došlo je do greškre prilikom brisanja kviza!', error.message)
-   })
+  function handleDelete() {
+    quizApi().deleteQuiz(selectedDeleteId)
+      .then((res) => {
+        setTimeout(() => {
+          setOpenDelete(false)
+          window.location.reload()
+        }, 1000)
+
+      })
+      .catch((error) => {
+        alert('Došlo je do greškre prilikom brisanja kviza!', error.message)
+      })
   }
 
   return (
@@ -91,12 +91,12 @@ const Quiz = () => {
         endIcon={<AddIcon />}
         btnText={"Kreiraj"}
       />
-  
-      <TableComponent rows={rows} columns={columns} createData={createData}  setSelectedUpdateId={setSelectedUpdateId} 
-      handleOpenEditModal={handleOpenEditModal} handleOpenDeleteModal={handleOpenDeleteModal} setSelectedDeleteId={setSelectedDeleteId}  setSelectedName={setSelectedName} module="quiz"/>
+
+      <TableComponent placeholder="Pretraži kvizove po imenu, opisu ili kreatoru..." rows={rows} columns={columns} createData={createData} setSelectedUpdateId={setSelectedUpdateId}
+        handleOpenEditModal={handleOpenEditModal} handleOpenDeleteModal={handleOpenDeleteModal} setSelectedDeleteId={setSelectedDeleteId} setSelectedName={setSelectedName} module="quiz" />
       <AddQuiz open={open} handleClose={handleCloseCreateModal} />
       <EditQuiz open={openEdit} handleClose={handleCloseEditModal} id={selectedUpdateId} />
-      <DeleteModal open={openDelete} handleClose={handleCloseDeleteModal} handleDelete={handleDelete} userName={selectedName}  />
+      <DeleteModal open={openDelete} handleClose={handleCloseDeleteModal} handleDelete={handleDelete} userName={selectedName} />
     </Paper>
   );
 };

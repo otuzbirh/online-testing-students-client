@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Container, Box } from '@mui/material';
-import Header from './Header';
 import Menu from './Menu';
-import Footer from './Footer';
+
 
 
 
@@ -10,15 +9,9 @@ const Dashboard = ({ children }) => {
 
   const [open, setOpen] = useState(true);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false)
+  const handleToggle = () => {
+    setOpen(!open);
   }
-
-
 
   return (
     <div style={{
@@ -30,7 +23,7 @@ const Dashboard = ({ children }) => {
       overflow: 'hidden !important'
     }}>
 
-      <Menu handleClose={handleClose} open={open} />
+      <Menu handleToggle={handleToggle} open={open} />
 
       <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         {/* <Header handleOpen={handleOpen} open={open} /> */}

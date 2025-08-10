@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   Drawer,
   List,
@@ -8,29 +7,22 @@ import {
   IconButton,
   Typography,
   Box,
-  Divider,
   Avatar,
-  Collapse,
   Tooltip,
   styled,
-  alpha,
-  useTheme,
 } from '@mui/material';
 import {
-  Home as HomeIcon,
   People as PeopleIcon,
-  Settings as SettingsIcon,
-  Menu as MenuIcon,
   Close as CloseIcon,
+  Menu as MenuIcon,
   Logout as LogoutIcon,
   Person as PersonIcon,
   Quiz as QuizIcon,
   CreditScore as CreditScoreIcon,
-  ExpandLess,
-  ExpandMore,
+
   Dashboard as DashboardIcon,
 } from '@mui/icons-material';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIsAuthenticated } from "./../../../store/store";
 
@@ -197,12 +189,12 @@ const CloseButton = styled(IconButton)(({ theme }) => ({
   transition: 'all 0.3s ease',
 }));
 
-const Menu = ({ open, handleClose, isMobile }) => {
+const Menu = ({ open, handleToggle, isMobile }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const role = useSelector((state) => state.auth.role);
   const name = useSelector((state) => state.auth.name);
   const surname = useSelector((state) => state.auth.surname);
-  const theme = useTheme();
 
   const adminLinks = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin/dashboard' },
@@ -234,7 +226,12 @@ const Menu = ({ open, handleClose, isMobile }) => {
   };
 
   const menuItems = getLinks(role);
-  const currentPath = window.location.pathname;
+  const currentPath = location.pathname;
+
+  // Function to check if a menu item is active
+  const isActive = (itemPath) => {
+    return currentPath === itemPath || currentPath.startsWith(itemPath + '/');
+  };
 
   function handleLogout() {
     dispatch(setIsAuthenticated(false));
@@ -246,7 +243,7 @@ const Menu = ({ open, handleClose, isMobile }) => {
       variant={isMobile ? "temporary" : "permanent"}
       anchor="left"
       open={open}
-      onClose={handleClose}
+      onClose={handleToggle}
       isMobile={isMobile}
     >
       <LogoContainer open={open}>
@@ -279,14 +276,12 @@ const Menu = ({ open, handleClose, isMobile }) => {
             </Typography>
           </Box>
         )}
-        {open && (
-          <CloseButton
-            onClick={handleClose}
-            size="small"
-          >
-            <CloseIcon fontSize="small" />
-          </CloseButton>
-        )}
+        <CloseButton
+          onClick={handleToggle}
+          size="small"
+        >
+          {open ? <CloseIcon fontSize="small" /> : <MenuIcon fontSize="small" />}
+        </CloseButton>
       </LogoContainer>
 
       <List sx={{ flex: 1, py: 2 }}>
@@ -301,7 +296,7 @@ const Menu = ({ open, handleClose, isMobile }) => {
               button
               component={Link}
               to={item.path}
-              active={currentPath === item.path ? 1 : 0}
+              active={isActive(item.path) ? 1 : 0}
             >
               <StyledListItemIcon>
                 {item.icon}

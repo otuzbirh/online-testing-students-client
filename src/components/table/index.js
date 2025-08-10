@@ -38,7 +38,6 @@ import {
   Person as PersonIcon,
   Email as EmailIcon,
   Badge as BadgeIcon,
-  FilterList as FilterIcon
 } from "@mui/icons-material";
 import { useNavigate } from 'react-router-dom';
 
@@ -305,7 +304,8 @@ export default function TableComponent({
   setSelectedDeleteId,
   setSelectedName,
   handleOpenDeleteModal,
-  module
+  module,
+  placeholder
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -566,7 +566,7 @@ export default function TableComponent({
         <SearchField
           fullWidth
           variant="outlined"
-          placeholder="Pretraži korisnike po imenu, email-u ili ulozi..."
+          placeholder={placeholder ?? "Pretraži korisnike po imenu, email-u ili ulozi..."}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           InputProps={{
