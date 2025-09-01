@@ -97,7 +97,7 @@ const Students = () => {
         handleOpenEditModal={handleOpenEditModal} handleOpenDeleteModal={handleOpenDeleteModal} setSelectedDeleteId={setSelectedDeleteId} setSelectedName={setSelectedName} />
       <AddStudent open={open} handleClose={handleCloseCreateModal} />
       <EditStudent open={openEdit} handleClose={handleCloseEditModal} id={selectedUpdateId} />
-      <DeleteModal open={openDelete} handleClose={handleCloseDeleteModal} handleDelete={handleDelete} userName={selectedName} />
+      <DeleteModal open={openDelete} dialogTitle="Brisanje studenta?" handleClose={handleCloseDeleteModal} handleDelete={handleDelete} userName={selectedName} />
     </Paper>
   );
 };

@@ -269,6 +269,9 @@ export default function SimpleTable({
   const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
   const open = Boolean(anchorEl);
 
+  // Check if delete functionality is enabled
+  const hasDeleteActions = Boolean(handleOpenDeleteModal && setSelectedDeleteId);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -320,20 +323,22 @@ export default function SimpleTable({
     <Fade in={true} timeout={300 + index * 50} key={row.id || row.code}>
       <MobileCard>
         <CardContent sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-            <Box sx={{ flex: 1, minWidth: 0 }}>
-              <Typography variant="h6" fontWeight={700} color="text.primary" gutterBottom>
-                <InventoryIcon sx={{ mr: 1, verticalAlign: 'middle', color: 'primary.main' }} />
-                Stavka #{row.id?.toString().slice(-6) || 'N/A'}
-              </Typography>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+              <Box sx={{ flex: 1, minWidth: 0 }}>
+                <Typography variant="h6" fontWeight={700} color="text.primary" gutterBottom>
+                  <InventoryIcon sx={{ mr: 1, verticalAlign: 'middle', color: 'primary.main' }} />
+                  Stavka #{row.id?.toString().slice(-6) || 'N/A'}
+                </Typography>
+              </Box>
+              {hasDeleteActions && (
+                <ActionButton
+                  onClick={(event) => handleClick(event, row.id)}
+                  size="small"
+                >
+                  <MoreVertIcon />
+                </ActionButton>
+              )}
             </Box>
-            <ActionButton
-              onClick={(event) => handleClick(event, row.id)}
-              size="small"
-            >
-              <MoreVertIcon />
-            </ActionButton>
-          </Box>
 
           <Stack spacing={2}>
             {columns.map((column) => {
@@ -396,15 +401,17 @@ export default function SimpleTable({
                     {column.label}
                   </TableCell>
                 ))}
-                <TableCell align="center" style={{ width: '80px', minWidth: '80px' }}>
-                  Akcije
-                </TableCell>
+                {hasDeleteActions && (
+                  <TableCell align="center" style={{ width: '80px', minWidth: '80px' }}>
+                    Akcije
+                  </TableCell>
+                )}
               </TableRow>
             </TableHeaderStyled>
             <TableBody>
               {!rows || rows.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={columns.length + 1} align="center" sx={{ py: 0, border: 'none' }}>
+                  <TableCell colSpan={columns.length + (hasDeleteActions ? 1 : 0)} align="center" sx={{ py: 0, border: 'none' }}>
                     <EmptyState>
                       <InventoryIcon sx={{ fontSize: 80, color: 'text.secondary', mb: 2 }} />
                       <Typography variant="h5" color="text.secondary" fontWeight={600} gutterBottom>
@@ -432,19 +439,21 @@ export default function SimpleTable({
                             </StyledTableCell>
                           );
                         })}
-                        <StyledTableCell align="center">
-                          <Tooltip title="Više opcija" arrow placement="left">
-                            <ActionButton
-                              onClick={(event) => {
-                                handleClick(event, row.id);
-                                setSelectedId(row.id);
-                              }}
-                              size="small"
-                            >
-                              <MoreVertIcon sx={{ fontSize: 18 }} />
-                            </ActionButton>
-                          </Tooltip>
-                        </StyledTableCell>
+                        {hasDeleteActions && (
+                          <StyledTableCell align="center">
+                            <Tooltip title="Više opcija" arrow placement="left">
+                              <ActionButton
+                                onClick={(event) => {
+                                  handleClick(event, row.id);
+                                  setSelectedId(row.id);
+                                }}
+                                size="small"
+                              >
+                                <MoreVertIcon sx={{ fontSize: 18 }} />
+                              </ActionButton>
+                            </Tooltip>
+                          </StyledTableCell>
+                        )}
                       </StyledTableRow>
                     </Fade>
                   ))
@@ -454,29 +463,31 @@ export default function SimpleTable({
         </StyledTableContainer>
       )}
 
-      <StyledMenu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Fade}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        onClick={() => {
-          setSelectedDeleteId(selectedId);
-        }}
-      >
-        <MenuItem
+      {hasDeleteActions && (
+        <StyledMenu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Fade}
+          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           onClick={() => {
-            handleOpenDeleteModal();
-            handleClose();
+            setSelectedDeleteId(selectedId);
           }}
         >
-          <DeleteIcon sx={{ mr: 2, color: 'error.main', fontSize: 20 }} />
-          <Typography variant="body2" fontWeight={600}>
-            Obriši
-          </Typography>
-        </MenuItem>
-      </StyledMenu>
+          <MenuItem
+            onClick={() => {
+              handleOpenDeleteModal();
+              handleClose();
+            }}
+          >
+            <DeleteIcon sx={{ mr: 2, color: 'error.main', fontSize: 20 }} />
+            <Typography variant="body2" fontWeight={600}>
+              Obriši
+            </Typography>
+          </MenuItem>
+        </StyledMenu>
+      )}
 
       <PaginationContainer>
         <TablePagination

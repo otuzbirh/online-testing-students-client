@@ -96,7 +96,7 @@ const Quiz = () => {
         handleOpenEditModal={handleOpenEditModal} handleOpenDeleteModal={handleOpenDeleteModal} setSelectedDeleteId={setSelectedDeleteId} setSelectedName={setSelectedName} module="quiz" />
       <AddQuiz open={open} handleClose={handleCloseCreateModal} />
       <EditQuiz open={openEdit} handleClose={handleCloseEditModal} id={selectedUpdateId} />
-      <DeleteModal open={openDelete} handleClose={handleCloseDeleteModal} handleDelete={handleDelete} userName={selectedName} />
+      <DeleteModal open={openDelete} dialogTitle="Brisanje kviza?" handleClose={handleCloseDeleteModal} handleDelete={handleDelete} userName={selectedName} />
     </Paper>
   );
 };

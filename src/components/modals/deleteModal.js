@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DeleteModal({open, handleClose, handleDelete, userName}) {
+export default function DeleteModal({open, handleClose, handleDelete, userName, dialogTitle}) {
 
 
   return (
@@ -24,7 +24,7 @@ export default function DeleteModal({open, handleClose, handleDelete, userName})
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Brisanje korisnika?"}</DialogTitle>
+        <DialogTitle>{dialogTitle ? dialogTitle : "Brisanje korisnika?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
            Da li ste sigurni da želite obrisati  {userName}?

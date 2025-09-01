@@ -27,7 +27,16 @@ const Dashboard = ({ children }) => {
 
       <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         {/* <Header handleOpen={handleOpen} open={open} /> */}
-        <Container maxWidth="lg" sx={{ padding: 3, display: 'flex', width: '100%', flexDirection: 'column', height: '100%', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+        <Container maxWidth="xl" sx={{ 
+          padding: 3, 
+          display: 'flex', 
+          width: '100%', 
+          flexDirection: 'column', 
+          minHeight: '100%',
+          justifyContent: 'flex-start', 
+          alignItems: 'stretch',
+          overflow: 'visible'
+        }}>
           {children}
         </Container>
         {/* <Footer /> */}

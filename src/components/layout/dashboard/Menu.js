@@ -144,6 +144,7 @@ const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
   color: 'rgba(255, 255, 255, 0.9)',
   minWidth: '18px',
   justifyContent: 'center',
+  marginRight: '10px',
   '& .MuiSvgIcon-root': {
     fontSize: '1.4rem',
     filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))',
